@@ -1,35 +1,38 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require("dotenv").config();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const expressValidator = require("express-validator");
+require("dotenv").config();
 
-// import routes
+// importar rutas
+const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 
 // app
 const app = express();
 
-// db
+// DB
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
+    useCreateIndex: true
   })
-  .then(() => console.log("DB Connected"));
+  .then(() => console.log("Database Connected"));
 
-// middleware
+// middlewares
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
 
-//routes middleware
+// routes middleware
+app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT;
 
-app.listen(port, () => console.log(`running on port ${port}`));
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// virtual field
 userSchema
   .virtual("password")
   .set(function(password) {
@@ -45,13 +44,13 @@ userSchema
     this.salt = uuidv1();
     this.hashed_password = this.encryptPassword(password);
   })
-  .get(() => {
+  .get(function() {
     return this._password;
   });
 
 userSchema.methods = {
-  authenticate: function(plaintext) {
-    return this.encryptPassword(plaintext) === this.hashed_password;
+  authenticate: function(plainText) {
+    return this.encryptPassword(plainText) === this.hashed_password;
   },
 
   encryptPassword: function(password) {
