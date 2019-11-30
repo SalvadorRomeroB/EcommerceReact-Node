@@ -25,9 +25,12 @@ exports.create = (req, res) => {
   });
 };
 
+//Read
 exports.read = (req, res) => {
   return res.json(req.category);
 };
+
+//Update
 
 exports.update = (req, res) => {
   const category = req.category;
@@ -42,6 +45,7 @@ exports.update = (req, res) => {
   });
 };
 
+//Delete
 exports.remove = (req, res) => {
   const category = req.category;
   category.remove((err, data) => {
