@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "./Layout";
+import PageLayout from "./Layout";
 
 const Home = () => (
-  <Layout title="Home Page" description="This is home page">
+  <PageLayout title="Home Page" description="This is home page">
     ...
-  </Layout>
+  </PageLayout>
 );
 
 export default Home;
