@@ -39,6 +39,14 @@ app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 const port = process.env.PORT;
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("store/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "store", "build", "index.html"));
+  });
+}
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
