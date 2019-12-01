@@ -1,20 +1,43 @@
 import React from "react";
 import Menu from "./Menu";
+import { Layout } from "antd";
+import { Row, Col } from "antd";
 
-const Layout = ({
+const { Header, Content, Footer } = Layout;
+const PageLayout = ({
   title = "Title",
   description = "Description",
-  className,
   children
 }) => (
-  <div>
-    <Menu />
-    <div className="jumbotron">
-      <h2>{title}</h2>
-      <p className="lead"> {description} </p>
-    </div>
-    <div className={className}>{children}</div>
-  </div>
+  <Layout className="layout">
+    <Header>
+      <div className="logo" />
+      <Menu />
+    </Header>
+
+    <Content style={{ padding: "0 50px" }}>
+      <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
+        <Row style={{ textAlign: "center" }}>
+          <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+          <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+            <h1> {title} </h1>
+          </Col>
+          <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+        </Row>
+        <Row style={{ textAlign: "center" }}>
+          <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+          <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+            <h3> {description} </h3>
+          </Col>
+          <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+        </Row>
+        <div>{children}</div>
+      </div>
+    </Content>
+    <Footer style={{ textAlign: "center" }}>
+      Tlaloc ©2019 Created by Salva and Jaquez
+    </Footer>
+  </Layout>
 );
 
-export default Layout;
+export default PageLayout;

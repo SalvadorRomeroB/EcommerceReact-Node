@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signIn, authenticate } from "../auth";
+import { Form, Icon, Input, Button, Row, Col } from "antd";
+import { isAuthenticated } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -13,6 +15,7 @@ const Signin = () => {
   });
 
   const { email, password, error, loading, redirectToReferrer } = values;
+  const { user } = isAuthenticated();
 
   const handleChange = input => event => {
     setValues({ ...values, error: false, [input]: event.target.value });
@@ -37,61 +40,69 @@ const Signin = () => {
 
   // FORM
   const signInForm = () => (
-    <form>
-      <div className="form-group">
-        <label className="text-muted"> Email</label>
-        <input
-          onChange={handleChange("email")}
-          type="email"
-          className="form-control"
-          value={email}
-        />
-      </div>
-      <div className="form-group">
-        <label className="text-muted"> Password</label>
-        <input
-          onChange={handleChange("password")}
-          type="password"
-          className="form-control"
-          value={password}
-        />
-      </div>
-      <button onClick={clickSubmit} className="btn btn-primary">
-        Submit
-      </button>
-    </form>
+    <Row>
+      <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+
+      <Col xs={{ span: 18, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+        {showIsLoading()}
+        {showError()}
+        <Form className="login-form">
+          <Form.Item>
+            <Input
+              prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="email"
+              onChange={handleChange("email")}
+              type="email"
+              value={email}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              type="password"
+              placeholder="Password"
+              onChange={handleChange("password")}
+              value={password}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" onClick={clickSubmit}>
+              Log in
+            </Button>
+            or <Link to="/signup"> register now!</Link>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+    </Row>
   );
 
   const showError = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
-    >
-      {error}
-    </div>
+    <div style={{ display: error ? "" : "none" }}>{error}</div>
   );
 
   const showIsLoading = () =>
     loading && (
-      <div className="alert alert-info">
-        <h2>Loading...</h2>{" "}
+      <div>
+        <h3>Loading...</h3>
       </div>
     );
 
   const redirectUser = () => {
     if (redirectToReferrer) {
+      if (user && user.role === 1) {
+        return <Redirect to="/admin/dashboard" />;
+      } else {
+        return <Redirect to="/user/dashboard" />;
+      }
+    }
+    if (isAuthenticated()) {
       return <Redirect to="/" />;
     }
   };
 
   return (
-    <Layout
-      title="Sign In"
-      description="Please sign in"
-      className="container col-md-8 offset-md-2"
-    >
-      {showIsLoading()}
-      {showError()}
+    <Layout title="Sign In" description="Please enter email and password">
       {signInForm()}
       {redirectUser()}
     </Layout>

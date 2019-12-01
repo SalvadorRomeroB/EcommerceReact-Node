@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signUp } from "../auth";
+import { Form, Icon, Input, Button, Row, Col } from "antd";
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -9,7 +10,8 @@ const Signup = () => {
     email: "",
     password: "",
     error: "",
-    success: false
+    success: false,
+    redirectToReferrer: false
   });
 
   const { name, email, password, success, error } = values;
@@ -38,68 +40,64 @@ const Signup = () => {
   };
 
   const signUpForm = () => (
-    <form>
-      <div className="form-group">
-        <label className="text-muted">Name</label>
-        <input
-          onChange={handleChange("name")}
-          type="text"
-          className="form-control"
-          value={name}
-        />
-      </div>
+    <Row>
+      <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
 
-      <div className="form-group">
-        <label className="text-muted">Email</label>
-        <input
-          onChange={handleChange("email")}
-          type="email"
-          className="form-control"
-          value={email}
-        />
-      </div>
-
-      <div className="form-group">
-        <label className="text-muted">Password</label>
-        <input
-          onChange={handleChange("password")}
-          type="password"
-          className="form-control"
-          value={password}
-        />
-      </div>
-      <button onClick={clickSubmit} className="btn btn-primary">
-        Submit
-      </button>
-    </form>
+      <Col xs={{ span: 18, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+        <Form className="login-form">
+          {showError()}
+          <Form.Item>
+            <Input
+              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="User"
+              onChange={handleChange("name")}
+              type="text"
+              value={name}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="Email"
+              onChange={handleChange("email")}
+              type="email"
+              value={email}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              type="password"
+              placeholder="Password"
+              onChange={handleChange("password")}
+              value={password}
+            />
+          </Form.Item>
+          {showSuccess()}
+          <Form.Item>
+            <Button type="primary" htmlType="submit" onClick={clickSubmit}>
+              Create Account
+            </Button>
+            or <Link to="/signin"> Log in!</Link>
+          </Form.Item>
+        </Form>
+      </Col>
+      <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+    </Row>
   );
 
   const showError = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
-    >
-      {error}
-    </div>
+    <div style={{ display: error ? "" : "none" }}>{error}</div>
   );
 
   const showSuccess = () => (
-    <div
-      className="alert alert-info"
-      style={{ display: success ? "" : "none" }}
-    >
-      New account is created. Please <Link to="/signin">Signin</Link>
+    <div style={{ display: success ? "" : "none" }}>
+      New account has been created. Please <Link to="/signin">Log in!</Link>
     </div>
   );
 
   return (
-    <Layout
-      title="Signup"
-      description="Please sign up"
-      className="container col-md-8 offset-md-2"
-    >
-      {showSuccess()}
-      {showError()}
+    <Layout title="Signup" description="Please sign up">
       {signUpForm()}
     </Layout>
   );
