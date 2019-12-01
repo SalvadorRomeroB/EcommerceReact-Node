@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import axios from "axios";
+import { Button } from "antd";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
               <li>{category.name}</li>
             ))}
           </ul>
+          <Button type="primary">Button</Button>
         </header>
       </div>
     )
