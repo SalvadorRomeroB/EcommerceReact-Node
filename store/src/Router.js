@@ -10,7 +10,7 @@ import AdminDashboard from "./user/AdminDashboard";
 
 const Routes = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/signin" exact component={Signin} />
