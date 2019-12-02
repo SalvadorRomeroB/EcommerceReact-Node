@@ -58,6 +58,7 @@ function Carrito() {
       ) : (
         <h1>Your Shopping Cart is empty.</h1>
       )}
+      <Button>Comprar</Button>
     </PageLayout>
   );
 }
