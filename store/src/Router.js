@@ -11,6 +11,7 @@ import Carrito from "./core/Carrito";
 import { useDispatch } from "react-redux";
 import { listProducts, listCategories } from "../src/storeRedux/actions/index";
 import axios from "axios";
+import "./App.css";
 
 function Routes() {
   const [products, setProducts] = React.useState(null);
