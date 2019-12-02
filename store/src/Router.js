@@ -7,6 +7,7 @@ import PrivateRoute from "./auth/privateRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
+import Carrito from "./core/Carrito";
 import { useDispatch } from "react-redux";
 import { listProducts, listCategories } from "../src/storeRedux/actions/index";
 import axios from "axios";
@@ -39,6 +40,7 @@ function Routes() {
         <Route path="/" exact component={Home} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
+        <PrivateRoute path="/carrito" exact component={Carrito} />
         <PrivateRoute path="/user/dashboard" exact component={Dashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
       </Switch>

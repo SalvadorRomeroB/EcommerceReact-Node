@@ -24,3 +24,10 @@ export const listCategories = listCategories => {
     data: listCategories
   };
 };
+
+export const addProductoToBuy = Product => {
+  return {
+    type: "ADDPRODUCTS",
+    data: Product
+  };
+};

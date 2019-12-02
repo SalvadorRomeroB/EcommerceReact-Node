@@ -1,22 +1,36 @@
 import React from "react";
 import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
+import { Button } from "antd";
+import { useDispatch } from "react-redux";
+import { addProductoToBuy } from "../storeRedux/actions/index";
 
 function Home() {
+  const dispatch = useDispatch();
   const productsList = useSelector(state => state.productsReducer);
-  const categoryList = useSelector(state => state.categoryReducer);
+
+  function addProduct(id) {
+    productsList.forEach(element => {
+      if (element._id === id) {
+        dispatch(addProductoToBuy(element));
+      }
+    });
+  }
 
   return (
     <PageLayout title="Home Page" description="This is home page">
       <ul>
         {productsList.map(product => (
-          <li key={product._id}>{product.name}</li>
-        ))}
-      </ul>
-
-      <ul>
-        {categoryList.map(category => (
-          <li key={category._id}>{category.name}</li>
+          <div key={product._id} style={{ paddingBottom: "2em" }}>
+            <li>{product.name}</li>
+            <Button
+              type="primary"
+              shape="round"
+              onClick={() => addProduct(product._id)}
+            >
+              Comprar
+            </Button>
+          </div>
         ))}
       </ul>
     </PageLayout>
