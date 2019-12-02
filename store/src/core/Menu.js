@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
-import { Menu } from "antd";
+import { Menu, Icon } from "antd";
 
 const navBar = ({ history }) => (
   <div>
@@ -42,6 +42,9 @@ const navBar = ({ history }) => (
           </span>
         </Menu.Item>
       )}
+      <Menu.Item key="6" style={{ float: "right" }}>
+        <Icon type="shopping-cart" style={{ fontSize: "20px" }} />
+      </Menu.Item>
     </Menu>
   </div>
 );

@@ -1,4 +1,4 @@
-const productsReducer = (state = [], action) => {
+const categoryReducer = (state = [], action) => {
   switch (action.type) {
     case "LISTCATEGORIES":
       if (action.data !== null) {
@@ -11,4 +11,4 @@ const productsReducer = (state = [], action) => {
   }
 };
 
-export default productsReducer;
+export default categoryReducer;

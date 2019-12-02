@@ -17,3 +17,10 @@ export const listProducts = listProducts => {
     data: listProducts
   };
 };
+
+export const listCategories = listCategories => {
+  return {
+    type: "LISTCATEGORIES",
+    data: listCategories
+  };
+};

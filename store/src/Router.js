@@ -7,10 +7,34 @@ import PrivateRoute from "./auth/privateRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
+import { useDispatch } from "react-redux";
+import { listProducts, listCategories } from "../src/storeRedux/actions/index";
+import axios from "axios";
 
-const Routes = () => {
+function Routes() {
+  const [products, setProducts] = React.useState(null);
+  const [categories, setCategories] = React.useState(null);
+  const dispatch = useDispatch();
+
+  const fetchData = async (link, hook) => {
+    const result = await axios(link);
+    hook(result.data);
+  };
+
+  React.useEffect(() => {
+    fetchData("/api/products", setProducts);
+    fetchData("/api/categories/", setCategories);
+  }, []);
+
+  const productsInStore = () => {
+    dispatch(listProducts(products));
+    dispatch(listCategories(categories));
+  };
+
+  productsInStore();
+
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/signin" exact component={Signin} />
@@ -20,6 +44,6 @@ const Routes = () => {
       </Switch>
     </BrowserRouter>
   );
-};
+}
 
 export default Routes;
