@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run store\"",
-    "server": "nodemon app.js",
+    "start": "node app.js",
+    "server": "node app.js",
     "store": "npm start --prefix store",
     "dev": "concurrently \"npm run server\" \"npm run store\"",
     "heroku-postbuild": "npm install --prefix store && npm run build --prefix store"

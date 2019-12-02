@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const expressValidator = require("express-validator");
@@ -39,11 +40,11 @@ app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 const port = process.env.PORT;
 
-app.use(express.static("store/build"));
+app.use(express.static(path.join(__dirname, "store/build")));
 
 console.log("Set up * path");
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "store", "build", "index.html"));
+  res.sendFile(path.join(__dirname + "/store/build/index.html"));
 });
 
 app.listen(port, () => {
