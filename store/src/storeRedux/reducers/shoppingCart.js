@@ -16,8 +16,14 @@ const shoppingCartReducer = (state = [], action) => {
           state.push({ producto: action.data, cantidad: 1 });
         }
       } else {
-        console.log(3);
         state.push({ producto: action.data, cantidad: 1 });
+      }
+      return state;
+    case "EDITQUANTITYINCART":
+      for (let i = 0; i < state.length; i++) {
+        if (action.data === state[i].producto._id) {
+          state[i].cantidad += action.cantidad;
+        }
       }
       return state;
     default:

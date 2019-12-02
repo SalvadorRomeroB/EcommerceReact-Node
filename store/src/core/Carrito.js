@@ -3,11 +3,15 @@ import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
 import { Button, Row, Col } from "antd";
 import { useDispatch } from "react-redux";
-import { addProductoToBuy } from "../storeRedux/actions/index";
+import { editQuantityInCart } from "../storeRedux/actions/index";
 
 function Carrito() {
   const dispatch = useDispatch();
   const shoppingCart = useSelector(state => state.shoppingCartReducer);
+
+  function modifyQuantity(id, cantidad) {
+    dispatch(editQuantityInCart(id, cantidad));
+  }
 
   return (
     <PageLayout title="Shopping Cart" description="This is your Shopping Cart">
@@ -24,9 +28,28 @@ function Carrito() {
               <Row key={product.producto._id} style={{ paddingBottom: "2em" }}>
                 <Col span={12}>{product.producto.name}</Col>
                 <Col span={12}>
-                  <Button style={{ marginRight: "10px" }}>-</Button>
+                  {product.cantidad > 0 ? (
+                    <Button
+                      style={{ marginRight: "10px" }}
+                      onClick={() => {
+                        modifyQuantity(product.producto._id, -1);
+                      }}
+                    >
+                      -
+                    </Button>
+                  ) : null}
+
                   {product.cantidad}
-                  <Button style={{ marginLeft: "10px" }}>+</Button>
+                  {product.cantidad < product.producto.quantity ? (
+                    <Button
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => {
+                        modifyQuantity(product.producto._id, 1);
+                      }}
+                    >
+                      +
+                    </Button>
+                  ) : null}
                 </Col>
               </Row>
             ))}

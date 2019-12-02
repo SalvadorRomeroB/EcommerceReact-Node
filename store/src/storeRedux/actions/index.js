@@ -31,3 +31,11 @@ export const addProductoToBuy = Product => {
     data: Product
   };
 };
+
+export const editQuantityInCart = (id, cantidad) => {
+  return {
+    type: "EDITQUANTITYINCART",
+    data: id,
+    cantidad: cantidad
+  };
+};
