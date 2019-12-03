@@ -54,11 +54,11 @@ function Carrito() {
               </Row>
             ))}
           </div>
+          <Button>Comprar</Button>
         </div>
       ) : (
         <h1>Your Shopping Cart is empty.</h1>
       )}
-      <Button>Comprar</Button>
     </PageLayout>
   );
 }
