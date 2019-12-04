@@ -1,23 +1,52 @@
 import React from "react";
 import ShowImage from "../ShowImage";
 import styles from "../styles.module.css";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, notification } from "antd";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addProductoToBuy } from "../../storeRedux/actions/index";
+import { addProductoToBuy, addToPayment } from "../../storeRedux/actions/index";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
-  const productsList = useSelector(state => state.productsReducer);
+  let shoppingCart = useSelector(state => state.shoppingCartReducer);
 
-  const addToCart = id => {
-    productsList.forEach(element => {
-      console.log(id);
-      if (element._id === id) {
-        dispatch(addProductoToBuy(element));
-      }
+  function openNotification() {
+    notification.open({
+      message: "Error al agregar al carrito",
+      description:
+        "Ya no hay productos en existencia, todos se agregaron al carrito",
+      duration: 8
     });
-  };
+  }
+
+  function addProduct(element) {
+    if (shoppingCart.length !== 0) {
+      let found = false;
+      let max = false;
+      shoppingCart.forEach(product => {
+        if (element._id === product.producto._id) {
+          found = true;
+          if (element.quantity === product.cantidad) {
+            max = true;
+          }
+        }
+      });
+      if (found) {
+        if (max) {
+          openNotification();
+        } else {
+          dispatch(addProductoToBuy(element));
+          dispatch(addToPayment(element.price));
+        }
+      } else {
+        dispatch(addProductoToBuy(element));
+        dispatch(addToPayment(element.price));
+      }
+    } else {
+      dispatch(addProductoToBuy(element));
+      dispatch(addToPayment(element.price));
+    }
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -42,13 +71,13 @@ const ProductCard = ({ product }) => {
         </Col>
         <Col span={12} pull={1}>
           <Button
-            onClick={() => addToCart(product._id)}
+            onClick={() => addProduct(product)}
             type="primary"
             shape="round"
             icon="shopping-cart"
-            disabled={product.quantity == 0}
+            disabled={product.quantity === 0}
           >
-            {product.quantity == 0 ? "Out of Stock" : "Add to Cart"}
+            {product.quantity === 0 ? "Out of Stock" : "Add to Cart"}
           </Button>
         </Col>
       </Row>

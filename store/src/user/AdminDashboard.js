@@ -7,7 +7,7 @@ import "../index.css";
 
 const AdminDashboard = () => {
   const {
-    user: { _id, name, email, role }
+    user: { name, email, role }
   } = isAuthenticated();
 
   const adminLinks = () => {

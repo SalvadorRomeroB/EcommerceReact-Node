@@ -10,7 +10,7 @@ function navBar(props) {
       <Menu>
         {categoriesList.map(category => (
           <Menu.Item key={category._id}>
-            <a>{category.name}</a>
+            <a href={`/categoria/${category.name}`}>{category.name}</a>
           </Menu.Item>
         ))}
       </Menu>
@@ -25,11 +25,16 @@ function navBar(props) {
         </Menu.Item>
         <Menu.Item key="2">
           <Dropdown overlay={subMenu()}>
-            <a className="ant-dropdown-link">
+            <a href="/" className="ant-dropdown-link">
               Categorias <Icon type="down" />
             </a>
           </Dropdown>
         </Menu.Item>
+        {isAuthenticated() && isAuthenticated().user.role === 0 && (
+          <Menu.Item key="8">
+            <Link to="/catalogo">Catalogo</Link>
+          </Menu.Item>
+        )}
         {isAuthenticated() && isAuthenticated().user.role === 0 && (
           <Menu.Item key="3">
             <Link to="/user/dashboard">Dashboard</Link>

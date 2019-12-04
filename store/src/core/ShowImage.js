@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 const ShowImage = ({ item, url }) => (
   <div className="contain">
     <img
-      src={`api/${url}/photo/${item._id}`}
+      src={`/api/${url}/photo/${item._id}`}
       alt={item.name}
       className={styles.productImg}
     />
