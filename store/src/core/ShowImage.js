@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../core/productCard/productCard.module.css";
+import styles from "./styles.module.css";
 
 const ShowImage = ({ item, url }) => (
-  <div>
+  <div className="contain">
     <img
       src={`api/${url}/photo/${item._id}`}
       alt={item.name}

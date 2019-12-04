@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "./Menu";
 import { Layout, Row, Col } from "antd";
 import { useSelector } from "react-redux";
+import styles from "./styles.module.css";
 
 const { Header, Content, Footer } = Layout;
 const PageLayout = ({
@@ -18,7 +19,7 @@ const PageLayout = ({
         <Menu categories={categoryList} />
       </Header>
 
-      <Content style={{ padding: "0 50px" }}>
+      <Content className={styles.content}>
         <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
           <Row style={{ textAlign: "center" }}>
             <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
@@ -34,7 +35,9 @@ const PageLayout = ({
             </Col>
             <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
           </Row>
-          <div>{children}</div>
+          <Row>
+            <div className={styles.centered}>{children}</div>
+          </Row>
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>

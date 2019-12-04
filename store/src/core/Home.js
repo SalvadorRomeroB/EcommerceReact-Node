@@ -24,6 +24,7 @@ const Home = () => {
         setError(data.error);
       } else {
         setProductsByArrival(data);
+        console.log(data);
       }
     });
   };
