@@ -2,7 +2,6 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 import { Menu, Icon, Dropdown } from "antd";
-import { useSelector } from "react-redux";
 
 function navBar(props) {
   const categoriesList = props.categories;

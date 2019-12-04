@@ -1,40 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PageLayout from "./Layout";
-import { useSelector } from "react-redux";
-import { Button } from "antd";
-import { useDispatch } from "react-redux";
-import { addProductoToBuy } from "../storeRedux/actions/index";
+import ProductCard from "../core/productCard/ProductCard";
+import { getProducts } from "./apiCore";
 
-function Home() {
-  const dispatch = useDispatch();
-  const productsList = useSelector(state => state.productsReducer);
+const Home = () => {
+  const [productsBySell, setProductsBySell] = useState([]);
+  const [productsByArrival, setProductsByArrival] = useState([]);
+  const [error, setError] = useState(false);
 
-  function addProduct(id) {
-    productsList.forEach(element => {
-      if (element._id === id) {
-        dispatch(addProductoToBuy(element));
+  const loadProductsBySell = () => {
+    getProducts("sold").then(data => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsBySell(data);
       }
     });
-  }
+  };
+
+  const loadProductsByArrival = () => {
+    getProducts("createdAt").then(data => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsByArrival(data);
+        console.log(data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadProductsByArrival();
+    loadProductsBySell();
+  }, []);
 
   return (
     <PageLayout title="Home Page" description="This is home page">
-      <ul>
-        {productsList.map(product => (
-          <div key={product._id} style={{ paddingBottom: "2em" }}>
-            <li>{product.name}</li>
-            <Button
-              type="primary"
-              shape="round"
-              onClick={() => addProduct(product._id)}
-            >
-              Comprar
-            </Button>
-          </div>
-        ))}
-      </ul>
+      {productsByArrival.map((product, i) => (
+        <ProductCard key={i} product={product} />
+      ))}
     </PageLayout>
   );
-}
+};
 
 export default Home;

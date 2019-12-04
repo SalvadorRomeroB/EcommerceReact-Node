@@ -7,17 +7,17 @@ import "../index.css";
 
 const UserDashboard = () => {
   const {
-    user: { _id, name, email, role }
+    user: { name, email, role }
   } = isAuthenticated();
 
   const userLinks = () => {
     return (
       <Card title="User Links" hoverable="true" className="custom-card">
         <Row>
-          <Link to="/cart"> My Cart </Link>
+          <Link to="/carrito"> My Cart </Link>
         </Row>
         <Row>
-          <Link to="/profile/update"> Edit Profile </Link>
+          <Link to="/profile/edit"> Edit Profile </Link>
         </Row>
       </Card>
     );
