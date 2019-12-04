@@ -1,14 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
 import { Button, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { addProductoToBuy, addToPayment } from "../storeRedux/actions/index";
+import ProductCard from "../core/productCard/ProductCard";
+import { getProducts } from "./apiCore";
 
 function Home() {
   const dispatch = useDispatch();
   let productsList = useSelector(state => state.productsReducer);
   let shoppingCart = useSelector(state => state.shoppingCartReducer);
+  const [productsBySell, setProductsBySell] = useState([]);
+  const [productsByArrival, setProductsByArrival] = useState([]);
+  const [error, setError] = useState(false);
+
+  const loadProductsBySell = () => {
+    getProducts("sold").then(data => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsBySell(data);
+      }
+    });
+  };
+
+  const loadProductsByArrival = () => {
+    getProducts("createdAt").then(data => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsByArrival(data);
+        console.log(data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadProductsByArrival();
+    loadProductsBySell();
+  }, []);
 
   function openNotification() {
     notification.open({
@@ -64,6 +95,9 @@ function Home() {
           </div>
         ))}
       </ul>
+      {productsByArrival.map((product, i) => (
+        <ProductCard key={i} product={product} />
+      ))}
     </PageLayout>
   );
 }
