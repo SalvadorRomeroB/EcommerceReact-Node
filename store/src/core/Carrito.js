@@ -1,7 +1,7 @@
 import React from "react";
 import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
-import { Button, Row, Col } from "antd";
+import { Button, Row, Col, notification, Icon } from "antd";
 import { useDispatch } from "react-redux";
 import {
   editQuantityInCart,
@@ -27,15 +27,34 @@ function Carrito() {
     }
   }
 
+  function openNotification(status) {
+    if (status === "success") {
+      notification["success"]({
+        message: "Tu compra fue exitosa",
+        description:
+          "Revisa tu bandeja de entrada para los detalles de tu compra",
+        duration: 8
+      });
+    } else {
+      notification["error"]({
+        message: "Error al momento de la transaccion",
+        description:
+          "Tu compra no se pudo realizar, ponte en contacto con tu banco",
+        duration: 8
+      });
+    }
+  }
+
   async function handleToken(token) {
     const response = await axios.post("/checkout", {
       token,
       total
     });
     const { status } = response.data;
-    console.log("Response:", response.data);
     if (status === "success") {
+      openNotification("success");
     } else {
+      openNotification("error");
     }
   }
 
@@ -80,17 +99,17 @@ function Carrito() {
               </Row>
             ))}
           </div>
+          <StripeCheckOut
+            stripeKey="pk_test_TCQmQyxk0AElfsk1X7DMLNT300u76mDQm9"
+            token={handleToken}
+            billingAddress
+            shippingAddress
+            amount={total * 100}
+          />
         </div>
       ) : (
         <h1>Your Shopping Cart is empty.</h1>
       )}
-      <StripeCheckOut
-        stripeKey="pk_test_TCQmQyxk0AElfsk1X7DMLNT300u76mDQm9"
-        token={handleToken}
-        billingAddress
-        shippingAddress
-        amount={total * 100}
-      />
     </PageLayout>
   );
 }
