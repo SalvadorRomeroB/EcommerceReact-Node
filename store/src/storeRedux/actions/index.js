@@ -53,3 +53,10 @@ export const removeInPayment = precio => {
     data: precio
   };
 };
+
+export const deleteItem = id => {
+  return {
+    type: "DELETEITEM",
+    data: id
+  };
+};

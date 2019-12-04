@@ -1,21 +1,54 @@
 import React from "react";
 import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { addProductoToBuy, addToPayment } from "../storeRedux/actions/index";
 
 function Home() {
   const dispatch = useDispatch();
-  const productsList = useSelector(state => state.productsReducer);
+  let productsList = useSelector(state => state.productsReducer);
+  let shoppingCart = useSelector(state => state.shoppingCartReducer);
 
-  function addProduct(id) {
-    productsList.forEach(element => {
-      if (element._id === id) {
+  function openNotification() {
+    notification.open({
+      message: "Error al agregar al carrito",
+      description:
+        "Ya no hay productos en existencia, todos se agregaron al carrito",
+      duration: 8
+    });
+  }
+
+  function addProduct(element) {
+    if (shoppingCart.length !== 0) {
+      let found = false;
+      let max = false;
+      shoppingCart.forEach(product => {
+        if (element._id === product.producto._id) {
+          found = true;
+          if (element.quantity === product.cantidad) {
+            max = true;
+          }
+        }
+      });
+      if (found) {
+        if (max) {
+          openNotification();
+        } else {
+          console.log(1);
+          dispatch(addProductoToBuy(element));
+          dispatch(addToPayment(element.price));
+        }
+      } else {
+        console.log(2);
         dispatch(addProductoToBuy(element));
         dispatch(addToPayment(element.price));
       }
-    });
+    } else {
+      console.log(3);
+      dispatch(addProductoToBuy(element));
+      dispatch(addToPayment(element.price));
+    }
   }
 
   return (
@@ -27,7 +60,7 @@ function Home() {
             <Button
               type="primary"
               shape="round"
-              onClick={() => addProduct(product._id)}
+              onClick={() => addProduct(product)}
             >
               Comprar
             </Button>

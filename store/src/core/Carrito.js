@@ -1,12 +1,13 @@
 import React from "react";
 import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
-import { Button, Row, Col, notification, Icon } from "antd";
+import { Button, Row, Col, notification } from "antd";
 import { useDispatch } from "react-redux";
 import {
   editQuantityInCart,
   addToPayment,
-  removeInPayment
+  removeInPayment,
+  deleteItem
 } from "../storeRedux/actions/index";
 import StripeCheckOut from "react-stripe-checkout";
 import axios from "axios";
@@ -16,15 +17,24 @@ function Carrito() {
   let shoppingCart = useSelector(state => state.shoppingCartReducer);
   let total = useSelector(state => state.totalPaymentReducer);
 
+  function deleteProductInCart(producto) {
+    shoppingCart.forEach(element => {
+      if (element.producto._id === producto._id) {
+        if (element.cantidad === 0) {
+          dispatch(deleteItem(producto._id));
+        }
+      }
+    });
+  }
+
   function modifyItemInCart(producto, cantidad) {
     dispatch(editQuantityInCart(producto._id, cantidad));
     if (cantidad > 0) {
       dispatch(addToPayment(producto.price));
     } else {
-      console.log("descontar");
-      console.log(producto.price);
       dispatch(removeInPayment(producto.price));
     }
+    deleteProductInCart(producto);
   }
 
   function openNotification(status) {
