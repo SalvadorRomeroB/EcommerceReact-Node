@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { Button, Row, Col } from "antd";
 import { useDispatch } from "react-redux";
 import { editQuantityInCart } from "../storeRedux/actions/index";
+import StripeCheckOut from "react-stripe-checkout";
+import axios from "axios";
 
 function Carrito() {
   const dispatch = useDispatch();
@@ -11,6 +13,17 @@ function Carrito() {
 
   function modifyQuantity(id, cantidad) {
     dispatch(editQuantityInCart(id, cantidad));
+  }
+
+  async function handleToken(token) {
+    const response = await axios.post("/checkout", {
+      token
+    });
+    const { status } = response.data;
+    console.log("Response:", response.data);
+    if (status === "success") {
+    } else {
+    }
   }
 
   return (
@@ -54,11 +67,17 @@ function Carrito() {
               </Row>
             ))}
           </div>
-          <Button>Comprar</Button>
         </div>
       ) : (
         <h1>Your Shopping Cart is empty.</h1>
       )}
+      <StripeCheckOut
+        stripeKey="pk_test_TCQmQyxk0AElfsk1X7DMLNT300u76mDQm9"
+        token={handleToken}
+        billingAddress
+        shippingAddress
+        amount={100 * 100}
+      />
     </PageLayout>
   );
 }
