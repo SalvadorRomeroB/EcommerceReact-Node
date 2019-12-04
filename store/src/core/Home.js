@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PageLayout from "./Layout";
 import ProductCard from "../core/productCard/ProductCard";
 import { getProducts } from "./apiCore";
+import { Carousel } from "antd";
 
 function Home() {
   const [productsBySell, setProductsBySell] = useState([]);
@@ -36,14 +37,33 @@ function Home() {
   return (
     <PageLayout title="Home Page" description="This is home page">
       <h1>Nuevos Productos:</h1>
-      {productsByArrival.map((product, i) => (
-        <ProductCard key={i} product={product} />
-      ))}
-      <hr></hr>
+      <Carousel autoplay>
+        {productsByArrival.map((product, i) => (
+          <div key={i}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </Carousel>
+      <br />
+      <hr />
+      <br />
       <h1>Productos mas vendidos:</h1>
+      <Carousel autoplay>
+        {productsBySell.map((product, i) => (
+          <div key={i}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </Carousel>
+
+      {/* {productsByArrival.map((product, i) => (
+        <ProductCard key={i} product={product} />
+      ))} */}
+      {/* <hr></hr>
+
       {productsBySell.map((product, i) => (
         <ProductCard key={i} product={product} />
-      ))}
+      ))} */}
     </PageLayout>
   );
 }

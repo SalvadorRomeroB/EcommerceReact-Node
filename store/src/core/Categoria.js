@@ -9,14 +9,8 @@ function Catalogo({
     params: { name }
   }
 }) {
-  let categoryList = useSelector(state => state.categoryReducer);
+  //   let categoryList = useSelector(state => state.categoryReducer);
   let productsList = useSelector(state => state.productsReducer);
-
-  //   React.useEffect(() => {
-  //     categoryList = useSelector(state => state.categoryReducer);
-  //   }, []);
-
-  //   console.log(categoryList);
 
   //   if (correctCategory()) {
   //     return (
@@ -31,7 +25,7 @@ function Catalogo({
   return (
     <PageLayout title="Home Page" description="This is home page">
       {productsList.map((product, i) => {
-        return product.category !== null && product.category.name == name ? (
+        return product.category !== null && product.category.name === name ? (
           <ProductCard key={i} product={product} />
         ) : null;
       })}
