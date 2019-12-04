@@ -39,3 +39,17 @@ export const editQuantityInCart = (id, cantidad) => {
     cantidad: cantidad
   };
 };
+
+export const addToPayment = precio => {
+  return {
+    type: "ADDTOPAYMENT",
+    data: precio
+  };
+};
+
+export const removeInPayment = precio => {
+  return {
+    type: "REMOVEINPAYMENT",
+    data: precio
+  };
+};

@@ -3,21 +3,34 @@ import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
 import { Button, Row, Col } from "antd";
 import { useDispatch } from "react-redux";
-import { editQuantityInCart } from "../storeRedux/actions/index";
+import {
+  editQuantityInCart,
+  addToPayment,
+  removeInPayment
+} from "../storeRedux/actions/index";
 import StripeCheckOut from "react-stripe-checkout";
 import axios from "axios";
 
 function Carrito() {
   const dispatch = useDispatch();
-  const shoppingCart = useSelector(state => state.shoppingCartReducer);
+  let shoppingCart = useSelector(state => state.shoppingCartReducer);
+  let total = useSelector(state => state.totalPaymentReducer);
 
-  function modifyQuantity(id, cantidad) {
-    dispatch(editQuantityInCart(id, cantidad));
+  function modifyItemInCart(producto, cantidad) {
+    dispatch(editQuantityInCart(producto._id, cantidad));
+    if (cantidad > 0) {
+      dispatch(addToPayment(producto.price));
+    } else {
+      console.log("descontar");
+      console.log(producto.price);
+      dispatch(removeInPayment(producto.price));
+    }
   }
 
   async function handleToken(token) {
     const response = await axios.post("/checkout", {
-      token
+      token,
+      total
     });
     const { status } = response.data;
     console.log("Response:", response.data);
@@ -45,7 +58,7 @@ function Carrito() {
                     <Button
                       style={{ marginRight: "10px" }}
                       onClick={() => {
-                        modifyQuantity(product.producto._id, -1);
+                        modifyItemInCart(product.producto, -1);
                       }}
                     >
                       -
@@ -57,7 +70,7 @@ function Carrito() {
                     <Button
                       style={{ marginLeft: "10px" }}
                       onClick={() => {
-                        modifyQuantity(product.producto._id, 1);
+                        modifyItemInCart(product.producto, 1);
                       }}
                     >
                       +
@@ -76,7 +89,7 @@ function Carrito() {
         token={handleToken}
         billingAddress
         shippingAddress
-        amount={100 * 100}
+        amount={total * 100}
       />
     </PageLayout>
   );

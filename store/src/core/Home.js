@@ -3,7 +3,7 @@ import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
 import { Button } from "antd";
 import { useDispatch } from "react-redux";
-import { addProductoToBuy } from "../storeRedux/actions/index";
+import { addProductoToBuy, addToPayment } from "../storeRedux/actions/index";
 
 function Home() {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ function Home() {
     productsList.forEach(element => {
       if (element._id === id) {
         dispatch(addProductoToBuy(element));
+        dispatch(addToPayment(element.price));
       }
     });
   }

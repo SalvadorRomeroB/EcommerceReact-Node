@@ -3,6 +3,7 @@ import loggedReducer from "./isLogged";
 import productsReducer from "./products";
 import categoryReducer from "./categories";
 import shoppingCartReducer from "./shoppingCart";
+import totalPaymentReducer from "./totalPayment";
 import { combineReducers } from "redux";
 
 const allReducers = combineReducers({
@@ -10,7 +11,8 @@ const allReducers = combineReducers({
   loggedReducer,
   productsReducer,
   categoryReducer,
-  shoppingCartReducer
+  shoppingCartReducer,
+  totalPaymentReducer
 });
 
 export default allReducers;
