@@ -35,17 +35,14 @@ function Home() {
         if (max) {
           openNotification();
         } else {
-          console.log(1);
           dispatch(addProductoToBuy(element));
           dispatch(addToPayment(element.price));
         }
       } else {
-        console.log(2);
         dispatch(addProductoToBuy(element));
         dispatch(addToPayment(element.price));
       }
     } else {
-      console.log(3);
       dispatch(addProductoToBuy(element));
       dispatch(addToPayment(element.price));
     }

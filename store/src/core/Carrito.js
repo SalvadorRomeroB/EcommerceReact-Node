@@ -1,7 +1,7 @@
 import React from "react";
 import PageLayout from "./Layout";
 import { useSelector } from "react-redux";
-import { Button, Row, Col, notification } from "antd";
+import { Button, Row, Col, notification, Icon } from "antd";
 import { useDispatch } from "react-redux";
 import {
   editQuantityInCart,
@@ -25,6 +25,12 @@ function Carrito() {
         }
       }
     });
+  }
+
+  function deleteItemFromCart(item, numberOfItems) {
+    for (let i = 0; i < numberOfItems; i++) {
+      modifyItemInCart(item.producto, -1);
+    }
   }
 
   function modifyItemInCart(producto, cantidad) {
@@ -74,15 +80,15 @@ function Carrito() {
         <div>
           <div>
             <Row>
-              <Col span={12}>Producto</Col>
-              <Col span={12}>Cantidad</Col>
+              <Col span={8}>Producto</Col>
+              <Col span={8}>Cantidad</Col>
             </Row>
           </div>
           <div>
             {shoppingCart.map(product => (
               <Row key={product.producto._id} style={{ paddingBottom: "2em" }}>
-                <Col span={12}>{product.producto.name}</Col>
-                <Col span={12}>
+                <Col span={8}>{product.producto.name}</Col>
+                <Col span={8}>
                   {product.cantidad > 0 ? (
                     <Button
                       style={{ marginRight: "10px" }}
@@ -105,6 +111,14 @@ function Carrito() {
                       +
                     </Button>
                   ) : null}
+                </Col>
+                <Col span={8}>
+                  <Icon
+                    type="delete"
+                    onClick={() => {
+                      deleteItemFromCart(product, product.cantidad);
+                    }}
+                  />
                 </Col>
               </Row>
             ))}
