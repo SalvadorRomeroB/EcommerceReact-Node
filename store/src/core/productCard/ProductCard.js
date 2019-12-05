@@ -46,9 +46,9 @@ const ProductCard = ({ product }) => {
             type="primary"
             shape="round"
             icon="shopping-cart"
-            disabled={product.quantity == 0}
+            disabled={product.quantity === 0}
           >
-            {product.quantity == 0 ? "Out of Stock" : "Add to Cart"}
+            {product.quantity === 0 ? "Out of Stock" : "Add to Cart"}
           </Button>
         </Col>
       </Row>

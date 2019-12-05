@@ -33,6 +33,8 @@ router.put(
   update
 );
 
+router.put("/product/:productId", requireSignin, isAuth, update);
+
 // filters/queries
 router.get("/products", list);
 router.get("/products/related/:productId", listRelated);
