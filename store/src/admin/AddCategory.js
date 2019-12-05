@@ -3,7 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createCategory } from "./apiAdmin";
-import { Form, Input, Button, Row, Col, Alert } from "antd";
+import { Form, Input, Button, Row, Col, Alert, Icon } from "antd";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
@@ -37,9 +37,6 @@ const AddCategory = () => {
     <div>
       <Row>
         <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-        <Col xs={{ span: 11, offset: 7 }} lg={{ span: 12, offset: 4 }}>
-          {goBack()}
-        </Col>
         <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
       </Row>
       <Row>
@@ -50,7 +47,6 @@ const AddCategory = () => {
           <Form className="login-form" onSubmit={clickSubmit}>
             <Form.Item>
               <Input
-                //   prefix={<Icon type="" style={{ color: "rgba(0,0,0,.25)" }} />}
                 type="text"
                 placeholder="category name"
                 onChange={handleChange}
@@ -83,11 +79,13 @@ const AddCategory = () => {
       return <Alert message={errorMessage} type="error" />;
     }
   };
-  const goBack = () => (
-    <Button type="primary" icon="left" shape="round">
-      <Link to="/admin/dashboard">.</Link>
-    </Button>
-  );
+  // const goBack = () => (
+  //   <Button type="primary" shape="round">
+  //     <Link to="/admin/dashboard">
+  //       <Icon type="left" />
+  //     </Link>
+  //   </Button>
+  // );
 
   return (
     <Layout

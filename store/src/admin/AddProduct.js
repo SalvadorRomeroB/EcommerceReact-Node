@@ -3,6 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { createProduct, getCategories } from "./apiAdmin";
+import styles from "./styles.module.css";
 import {
   Form,
   Input,
@@ -10,12 +11,13 @@ import {
   Row,
   Col,
   Alert,
+  Icon,
   InputNumber,
   Select
 } from "antd";
 
 const { TextArea } = Input;
-// const { Option } = Select;
+const { Option } = Select;
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -97,32 +99,16 @@ const AddProduct = () => {
   const newPostForm = () => (
     <div>
       <Row>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-        <Col xs={{ span: 11, offset: 7 }} lg={{ span: 12, offset: 2 }}>
-          {goBack()}
-        </Col>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-      </Row>
-      <Row>
         <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
         {showSuccess()}
         {showError()}
         <Col xs={{ span: 18, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-          <Form className="login-form" onSubmit={clickSubmit}>
-            {/* Add photo */}
-            <Form.Item>
-              <input
-                onChange={handleChange("photo")}
-                type="file"
-                name="photo"
-                accept="image/*"
-              />
-            </Form.Item>
+          <Form onSubmit={clickSubmit}>
             {/* Add Name */}
             <Form.Item>
               <Input
                 type="text"
-                placeholder="Add name"
+                placeholder="Add product name"
                 onChange={handleChange("name")}
                 value={name}
                 autoFocus
@@ -138,64 +124,77 @@ const AddProduct = () => {
                 value={description}
               />
             </Form.Item>
-            {/* Add price */}
-            <Form.Item>
-              {/* <InputNumber
-                defaultValue={0}
-                formatter={value =>
-                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={value => value.replace(/\$\s?|(,*)/g, "")}
-                onChange={handleChange("price")}
-                value={price}
-              /> */}
-              <input
-                type="number"
-                onChange={handleChange("price")}
-                value={price}
-              />
-            </Form.Item>
-            {/* Add Category */}
-            <Form.Item>
-              <select onChange={handleChange("category")}>
-                <option>Please select</option>
-                {categories &&
-                  categories.map((c, i) => (
-                    <option key={i} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-              </select>
-              {/* <Select
-                defaultValue="Select Category"
-                style={{ width: 120 }}
-                onChange={handleChange("category")}
-              >
-                {categories &&
-                  categories.map((c, i) => (
-                    <Option key={i} value={c._id}>
-                      {c.name}
-                    </Option>
-                  ))}
-              </Select> */}
-            </Form.Item>
+            <Row>
+              <Col span={18} push={9}>
+                {/* Add photo */}
+                <Form.Item>
+                  <div className={styles.uploadBtnWrapper}>
+                    <button className={styles.btn}>
+                      Choose Image
+                      <Icon type="upload" />
+                    </button>
+                    <input
+                      type="file"
+                      name="myfile"
+                      onChange={handleChange("photo")}
+                      name="photo"
+                      accept="image/*"
+                    />
+                  </div>
+                </Form.Item>
+              </Col>
+              <Col span={6} pull={18}>
+                {/* Price */}
+                <Form.Item>
+                  <input
+                    className={styles.inpFormat}
+                    type="number"
+                    min="10"
+                    onChange={handleChange("price")}
+                    value={price}
+                    placeholder="  Price"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={18} push={11}>
+                {/* Add quantity */}
+                <Form.Item>
+                  <input
+                    className={styles.inpFormat}
+                    placeholder="  Quantity"
+                    type="number"
+                    onChange={handleChange("quantity")}
+                    value={quantity}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={6} pull={18}>
+                <Form.Item>
+                  {/* Add Category */}
+                  <select
+                    onChange={handleChange("category")}
+                    className={styles.selectFormat}
+                  >
+                    <option>Select Category</option>
+                    {categories &&
+                      categories.map((c, i) => (
+                        <option key={i} value={c._id}>
+                          {c.name}
+                        </option>
+                      ))}
+                  </select>
+                </Form.Item>
+              </Col>
+            </Row>
 
-            {/* Add quantity */}
             <Form.Item>
-              <input
-                type="number"
-                onChange={handleChange("quantity")}
-                value={quantity}
-              />
-              {/* <InputNumber
-                defaultValue={0}
-                onChange={handleChange("quantity")}
-                value={quantity}
-              /> */}
-            </Form.Item>
-            <Form.Item>
-              <select onChange={handleChange("shipping")}>
-                <option>Please select</option>
+              <select
+                onChange={handleChange("shipping")}
+                className={styles.selectFormat}
+              >
+                <option>Shipping</option>
                 <option value="0">No</option>
                 <option value="1">Yes</option>
               </select>
@@ -212,11 +211,13 @@ const AddProduct = () => {
     </div>
   );
 
-  const goBack = () => (
-    <Button type="primary" icon="left" shape="round">
-      <Link to="/admin/dashboard">.</Link>
-    </Button>
-  );
+  // const goBack = () => (
+  //   <Button type="primary" shape="round">
+  //     <Link to="/admin/dashboard">
+  //       <Icon type="left" />
+  //     </Link>
+  //   </Button>
+  // );
   const showError = () => (
     <div style={{ display: error ? "" : "none" }}>
       <Alert message={error} type="error" />
@@ -232,13 +233,6 @@ const AddProduct = () => {
       </div>
     );
   };
-
-  // const showLoading = () =>
-  //   loading && (
-  //     <div className="alert alert-success">
-  //       <h2>Loading...</h2>
-  //     </div>
-  //   );
 
   return (
     <Layout
