@@ -9,7 +9,8 @@ import {
   removeInPayment,
   deleteItem,
   deleteTotal,
-  deleteShoppingCart
+  deleteShoppingCart,
+  listProducts
 } from "../storeRedux/actions/index";
 import StripeCheckOut from "react-stripe-checkout";
 import axios from "axios";
@@ -30,13 +31,13 @@ function Carrito() {
     });
   }
 
-  function updateDB() {
+  const updateDB = async () => {
     for (let i = 0; i < shoppingCart.length; i++) {
       let newQuantity = 0;
       for (let e = 0; e < productList.length; e++) {
         if (shoppingCart[i].producto._id === productList[e]._id) {
           newQuantity = productList[e].quantity - shoppingCart[i].cantidad;
-          axios.put("/api/updateproduct", {
+          await axios.put("/api/updateproduct", {
             params: {
               _id: shoppingCart[i].producto._id
             },
@@ -47,7 +48,7 @@ function Carrito() {
         }
       }
     }
-  }
+  };
 
   function deleteItemFromCart(item, numberOfItems) {
     for (let i = 0; i < numberOfItems; i++) {
@@ -65,7 +66,12 @@ function Carrito() {
     deleteProductInCart(producto);
   }
 
-  function openNotification(status) {
+  const fetchData = async link => {
+    const result = await axios(link);
+    return result.data;
+  };
+
+  async function openNotification(status) {
     if (status === "success") {
       notification["success"]({
         message: "Tu compra fue exitosa",
@@ -84,6 +90,7 @@ function Carrito() {
         duration: 8
       });
     }
+    dispatch(listProducts(await fetchData("/api/products")));
   }
 
   async function handleToken(token) {

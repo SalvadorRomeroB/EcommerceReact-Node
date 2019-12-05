@@ -10,13 +10,20 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   let shoppingCart = useSelector(state => state.shoppingCartReducer);
 
-  function openNotification() {
-    notification.open({
-      message: "Error al agregar al carrito",
-      description:
-        "Ya no hay productos en existencia, todos se agregaron al carrito",
-      duration: 8
-    });
+  function openNotification(status) {
+    if (status === "error") {
+      notification[status]({
+        message: "Error al agregar al carrito",
+        description:
+          "Ya no hay productos en existencia, todos se agregaron al carrito",
+        duration: 3
+      });
+    } else {
+      notification[status]({
+        message: "Producto agregado al carrito",
+        duration: 3
+      });
+    }
   }
 
   function addProduct(element) {
@@ -33,18 +40,21 @@ const ProductCard = ({ product }) => {
       });
       if (found) {
         if (max) {
-          openNotification();
+          openNotification("error");
         } else {
           dispatch(addProductoToBuy(element));
           dispatch(addToPayment(element.price));
+          openNotification("info");
         }
       } else {
         dispatch(addProductoToBuy(element));
         dispatch(addToPayment(element.price));
+        openNotification("info");
       }
     } else {
       dispatch(addProductoToBuy(element));
       dispatch(addToPayment(element.price));
+      openNotification("info");
     }
   }
 
