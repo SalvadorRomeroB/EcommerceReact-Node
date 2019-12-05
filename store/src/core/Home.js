@@ -9,6 +9,15 @@ function Home() {
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
 
+  var newList = list =>
+    list.slice(0, 4).map((product, i) => {
+      return (
+        <div key={i}>
+          <ProductCard product={product} />
+        </div>
+      );
+    });
+
   const loadProductsBySell = () => {
     getProducts("sold").then(data => {
       if (data.error) {
@@ -37,33 +46,12 @@ function Home() {
   return (
     <PageLayout title="Home Page" description="This is home page">
       <h1>Nuevos Productos:</h1>
-      <Carousel autoplay>
-        {productsByArrival.map((product, i) => (
-          <div key={i}>
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </Carousel>
+      <Carousel autoplay>{newList(productsByArrival)}</Carousel>
       <br />
       <hr />
       <br />
       <h1>Productos mas vendidos:</h1>
-      <Carousel autoplay>
-        {productsBySell.map((product, i) => (
-          <div key={i}>
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </Carousel>
-
-      {/* {productsByArrival.map((product, i) => (
-        <ProductCard key={i} product={product} />
-      ))} */}
-      {/* <hr></hr>
-
-      {productsBySell.map((product, i) => (
-        <ProductCard key={i} product={product} />
-      ))} */}
+      <Carousel autoplay>{newList(productsBySell)}</Carousel>
     </PageLayout>
   );
 }

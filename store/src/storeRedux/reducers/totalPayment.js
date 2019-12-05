@@ -4,6 +4,8 @@ const totalPaymentReducer = (state = 0, action) => {
       return state + action.data;
     case "REMOVEINPAYMENT":
       return state - action.data;
+    case "DELETETOTAL":
+      return 0;
     default:
       return state;
   }

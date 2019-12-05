@@ -2,9 +2,20 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 import { Menu, Icon, Dropdown } from "antd";
+import { useDispatch } from "react-redux";
+import { deleteTotal, deleteShoppingCart } from "../storeRedux/actions/index";
 
-function navBar(props) {
+function NavBar(props) {
+  const dispatch = useDispatch();
   const categoriesList = props.categories;
+
+  function signOutSession() {
+    dispatch(deleteTotal());
+    dispatch(deleteShoppingCart());
+    signout(() => {
+      props.history.push("/");
+    });
+  }
   function subMenu() {
     return (
       <Menu>
@@ -57,15 +68,7 @@ function navBar(props) {
         )}
         {isAuthenticated() && (
           <Menu.Item key="6">
-            <span
-              onClick={() =>
-                signout(() => {
-                  props.history.push("/");
-                })
-              }
-            >
-              Signout
-            </span>
+            <span onClick={() => signOutSession()}>Signout</span>
           </Menu.Item>
         )}
         <Menu.Item key="7" style={{ float: "right" }}>
@@ -78,4 +81,4 @@ function navBar(props) {
   );
 }
 
-export default withRouter(navBar);
+export default withRouter(NavBar);

@@ -60,3 +60,15 @@ export const deleteItem = id => {
     data: id
   };
 };
+
+export const deleteTotal = () => {
+  return {
+    type: "DELETETOTAL"
+  };
+};
+
+export const deleteShoppingCart = () => {
+  return {
+    type: "DELETESHOPPINGCART"
+  };
+};

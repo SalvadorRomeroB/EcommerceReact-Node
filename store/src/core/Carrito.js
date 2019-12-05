@@ -7,13 +7,16 @@ import {
   editQuantityInCart,
   addToPayment,
   removeInPayment,
-  deleteItem
+  deleteItem,
+  deleteTotal,
+  deleteShoppingCart
 } from "../storeRedux/actions/index";
 import StripeCheckOut from "react-stripe-checkout";
 import axios from "axios";
 
 function Carrito() {
   const dispatch = useDispatch();
+  let productList = useSelector(state => state.productsReducer);
   let shoppingCart = useSelector(state => state.shoppingCartReducer);
   let total = useSelector(state => state.totalPaymentReducer);
 
@@ -25,6 +28,25 @@ function Carrito() {
         }
       }
     });
+  }
+
+  function updateDB() {
+    for (let i = 0; i < shoppingCart.length; i++) {
+      let newQuantity = 0;
+      for (let e = 0; e < productList.length; e++) {
+        if (shoppingCart[i].producto._id === productList[e]._id) {
+          newQuantity = productList[e].quantity - shoppingCart[i].cantidad;
+          axios.put("/api/updateproduct", {
+            params: {
+              _id: shoppingCart[i].producto._id
+            },
+            body: {
+              quantity: newQuantity
+            }
+          });
+        }
+      }
+    }
   }
 
   function deleteItemFromCart(item, numberOfItems) {
@@ -51,6 +73,9 @@ function Carrito() {
           "Revisa tu bandeja de entrada para los detalles de tu compra",
         duration: 8
       });
+      updateDB();
+      dispatch(deleteTotal());
+      dispatch(deleteShoppingCart());
     } else {
       notification["error"]({
         message: "Error al momento de la transaccion",

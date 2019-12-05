@@ -33,6 +33,8 @@ const shoppingCartReducer = (state = [], action) => {
         }
       }
       return state;
+    case "DELETESHOPPINGCART":
+      return [];
     default:
       return state;
   }
