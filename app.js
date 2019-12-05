@@ -90,7 +90,6 @@ const port = process.env.PORT;
 
 app.use(express.static(path.join(__dirname, "store/build")));
 
-console.log("Set up * path");
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/store/build/index.html"));
 });
