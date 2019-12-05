@@ -35,8 +35,8 @@ function NavBar(props) {
           <Link to="/">Home</Link>
         </Menu.Item>
         <Menu.Item key="2">
-          <Dropdown overlay={subMenu()}>
-            <a href="/" className="ant-dropdown-link">
+          <Dropdown overlay={subMenu()} trigger={(["click"], ["hover"])}>
+            <a className="ant-dropdown-link">
               Categorias <Icon type="down" />
             </a>
           </Dropdown>
