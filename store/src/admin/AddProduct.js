@@ -17,7 +17,6 @@ import {
 } from "antd";
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -211,13 +210,6 @@ const AddProduct = () => {
     </div>
   );
 
-  // const goBack = () => (
-  //   <Button type="primary" shape="round">
-  //     <Link to="/admin/dashboard">
-  //       <Icon type="left" />
-  //     </Link>
-  //   </Button>
-  // );
   const showError = () => (
     <div style={{ display: error ? "" : "none" }}>
       <Alert message={error} type="error" />
