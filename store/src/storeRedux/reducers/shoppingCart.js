@@ -26,6 +26,15 @@ const shoppingCartReducer = (state = [], action) => {
         }
       }
       return state;
+    case "DELETEITEM":
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].producto._id === action.data) {
+          state.splice(i, 1);
+        }
+      }
+      return state;
+    case "DELETESHOPPINGCART":
+      return [];
     default:
       return state;
   }

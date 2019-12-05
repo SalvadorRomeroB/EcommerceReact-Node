@@ -2,15 +2,26 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 import { Menu, Icon, Dropdown } from "antd";
+import { useDispatch } from "react-redux";
+import { deleteTotal, deleteShoppingCart } from "../storeRedux/actions/index";
 
-function navBar(props) {
+function NavBar(props) {
+  const dispatch = useDispatch();
   const categoriesList = props.categories;
+
+  function signOutSession() {
+    dispatch(deleteTotal());
+    dispatch(deleteShoppingCart());
+    signout(() => {
+      props.history.push("/");
+    });
+  }
   function subMenu() {
     return (
       <Menu>
         {categoriesList.map(category => (
           <Menu.Item key={category._id}>
-            <a>{category.name}</a>
+            <a href={`/categoria/${category.name}`}>{category.name}</a>
           </Menu.Item>
         ))}
       </Menu>
@@ -30,6 +41,11 @@ function navBar(props) {
             </a>
           </Dropdown>
         </Menu.Item>
+        {isAuthenticated() && isAuthenticated().user.role === 0 && (
+          <Menu.Item key="8">
+            <Link to="/catalogo">Catalogo</Link>
+          </Menu.Item>
+        )}
         {isAuthenticated() && isAuthenticated().user.role === 0 && (
           <Menu.Item key="3">
             <Link to="/user/dashboard">Dashboard</Link>
@@ -52,15 +68,7 @@ function navBar(props) {
         )}
         {isAuthenticated() && (
           <Menu.Item key="6">
-            <span
-              onClick={() =>
-                signout(() => {
-                  props.history.push("/");
-                })
-              }
-            >
-              Signout
-            </span>
+            <span onClick={() => signOutSession()}>Signout</span>
           </Menu.Item>
         )}
         <Menu.Item key="7" style={{ float: "right" }}>
@@ -73,4 +81,4 @@ function navBar(props) {
   );
 }
 
-export default withRouter(navBar);
+export default withRouter(NavBar);

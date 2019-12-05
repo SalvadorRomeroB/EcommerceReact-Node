@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { Link } from "react-router-dom";
 import { createCategory } from "./apiAdmin";
-import { Form, Input, Button, Row, Col, Alert, Icon } from "antd";
+import { Form, Input, Button, Row, Col, Alert } from "antd";
 
 const AddCategory = () => {
   const [name, setName] = useState("");

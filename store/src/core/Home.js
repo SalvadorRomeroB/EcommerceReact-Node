@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import PageLayout from "./Layout";
 import ProductCard from "../core/productCard/ProductCard";
 import { getProducts } from "./apiCore";
+import { Carousel } from "antd";
 
-const Home = () => {
+function Home() {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
+
+  var newList = list =>
+    list.slice(0, 4).map((product, i) => {
+      return (
+        <div key={i}>
+          <ProductCard product={product} />
+        </div>
+      );
+    });
 
   const loadProductsBySell = () => {
     getProducts("sold").then(data => {
@@ -24,7 +34,6 @@ const Home = () => {
         setError(data.error);
       } else {
         setProductsByArrival(data);
-        console.log(data);
       }
     });
   };
@@ -36,11 +45,15 @@ const Home = () => {
 
   return (
     <PageLayout title="Home Page" description="This is home page">
-      {productsByArrival.map((product, i) => (
-        <ProductCard key={i} product={product} />
-      ))}
+      <h1>Nuevos Productos:</h1>
+      <Carousel autoplay>{newList(productsByArrival)}</Carousel>
+      <br />
+      <hr />
+      <br />
+      <h1>Productos mas vendidos:</h1>
+      <Carousel autoplay>{newList(productsBySell)}</Carousel>
     </PageLayout>
   );
-};
+}
 
 export default Home;

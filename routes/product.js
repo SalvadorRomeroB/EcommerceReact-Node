@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Product = require("../models/product");
 
 const {
   create,
@@ -41,6 +42,19 @@ router.get("/products/related/:productId", listRelated);
 router.get("/products/categories", listCategories);
 router.post("/products/by/search", listBySearch);
 router.get("/product/photo/:productId", photo);
+
+router.put("/updateproduct", (req, res) => {
+  Product.findByIdAndUpdate(req.body.params._id, req.body.body)
+    .select("-photo")
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Products nos found"
+        });
+      }
+      res.send(data);
+    });
+});
 
 // IDs
 router.param("userId", userById);

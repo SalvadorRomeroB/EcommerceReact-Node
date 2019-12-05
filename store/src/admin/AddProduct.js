@@ -1,23 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { Link } from "react-router-dom";
 import { createProduct, getCategories } from "./apiAdmin";
 import styles from "./styles.module.css";
-import {
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  Alert,
-  Icon,
-  InputNumber,
-  Select
-} from "antd";
+import { Form, Input, Button, Row, Col, Alert, Icon } from "antd";
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -43,7 +31,6 @@ const AddProduct = () => {
     price,
     categories,
     quantity,
-    loading,
     error,
     createdProduct,
     formData
@@ -135,7 +122,6 @@ const AddProduct = () => {
                     </button>
                     <input
                       type="file"
-                      name="myfile"
                       onChange={handleChange("photo")}
                       name="photo"
                       accept="image/*"
@@ -210,14 +196,6 @@ const AddProduct = () => {
       </Row>
     </div>
   );
-
-  // const goBack = () => (
-  //   <Button type="primary" shape="round">
-  //     <Link to="/admin/dashboard">
-  //       <Icon type="left" />
-  //     </Link>
-  //   </Button>
-  // );
   const showError = () => (
     <div style={{ display: error ? "" : "none" }}>
       <Alert message={error} type="error" />
