@@ -1,0 +1,35 @@
+.uploadBtnWrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid #40a9ff;
+  color: gray;
+  background-color: white;
+  border-radius: 8px;
+  font-size: 15px;
+  width: 140px;
+}
+
+.uploadBtnWrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.inpFormat {
+  width: 100px;
+  height: 46px;
+  border-radius: 8px;
+  border: 2px solid #40a9ff;
+}
+
+.selectFormat {
+  width: 150px;
+  height: 46px;
+  border-radius: 8px;
+  border: 2px solid #40a9ff;
+}

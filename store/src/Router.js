@@ -8,6 +8,8 @@ import PrivateRoute from "./auth/privateRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
+import addCategory from "./admin/AddCategory";
+import addProduct from "./admin/AddProduct";
 import Carrito from "./core/Carrito";
 import Categoria from "./core/Categoria";
 import { useDispatch } from "react-redux";
@@ -48,6 +50,8 @@ function Routes() {
         <PrivateRoute path="/carrito" exact component={Carrito} />
         <PrivateRoute path="/user/dashboard" exact component={Dashboard} />
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
+        <AdminRoute path="/create/category" exact component={addCategory} />
+        <AdminRoute path="/create/product" exact component={addProduct} />
       </Switch>
     </BrowserRouter>
   );
