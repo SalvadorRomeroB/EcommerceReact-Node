@@ -7,7 +7,10 @@ function Catalogo() {
   let productsList = useSelector(state => state.productsReducer);
 
   return (
-    <PageLayout title="Home Page" description="This is home page">
+    <PageLayout
+      title="Catalogo"
+      description="Aqui puedes ver todos nuestros productos"
+    >
       {productsList.map((product, i) => (
         <ProductCard key={i} product={product} />
       ))}

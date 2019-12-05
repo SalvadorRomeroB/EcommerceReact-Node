@@ -11,7 +11,7 @@ function Catalogo({
   let productsList = useSelector(state => state.productsReducer);
 
   return (
-    <PageLayout title="Home Page" description="This is home page">
+    <PageLayout title={name} description="">
       {productsList.map((product, i) => {
         return product.category !== null && product.category.name === name ? (
           <ProductCard key={i} product={product} />

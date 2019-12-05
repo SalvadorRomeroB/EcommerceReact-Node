@@ -41,11 +41,9 @@ function NavBar(props) {
             </a>
           </Dropdown>
         </Menu.Item>
-        {isAuthenticated() && isAuthenticated().user.role === 0 && (
-          <Menu.Item key="8">
-            <Link to="/catalogo">Catalogo</Link>
-          </Menu.Item>
-        )}
+        <Menu.Item key="8">
+          <Link to="/catalogo">Catalogo</Link>
+        </Menu.Item>
         {isAuthenticated() && isAuthenticated().user.role === 0 && (
           <Menu.Item key="3">
             <Link to="/user/dashboard">Dashboard</Link>

@@ -3,14 +3,23 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { createCategory } from "./apiAdmin";
 import { Form, Input, Button, Row, Col, Alert } from "antd";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { listCategories } from "../storeRedux/actions/index";
 
 const AddCategory = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
   // destructurar usuario y toquen
   const { user, token } = isAuthenticated();
+
+  const fetchData = async link => {
+    const result = await axios(link);
+    return result.data;
+  };
 
   const handleChange = e => {
     setError("");
@@ -22,12 +31,13 @@ const AddCategory = () => {
     setError("");
     setSuccess(false);
     //request Create Category
-    createCategory(user._id, token, { name }).then(data => {
+    createCategory(user._id, token, { name }).then(async data => {
       if (data.error) {
         setError(true);
       } else {
         setError("");
         setSuccess(true);
+        dispatch(listCategories(await fetchData("/api/categories")));
       }
     });
   };
