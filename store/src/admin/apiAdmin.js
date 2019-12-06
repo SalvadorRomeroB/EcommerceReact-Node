@@ -11,9 +11,7 @@ export const createCategory = (userId, token, category) => {
     .then(response => {
       return response.json();
     })
-    .catch(err => {
-      context.log(err);
-    });
+    .catch();
 };
 
 export const createProduct = (userId, token, product) => {
@@ -28,9 +26,7 @@ export const createProduct = (userId, token, product) => {
     .then(response => {
       return response.json();
     })
-    .catch(err => {
-      context.log(err);
-    });
+    .catch();
 };
 
 export const getCategories = () => {
@@ -40,7 +36,7 @@ export const getCategories = () => {
     .then(response => {
       return response.json();
     })
-    .catch(err => context.log(err));
+    .catch();
 };
 
 // PRODUCTS ADMIN
@@ -52,7 +48,7 @@ export const getProducts = () => {
     .then(response => {
       return response.json();
     })
-    .catch(err => context.log(err));
+    .catch();
 };
 
 export const deleteProduct = (productId, userId, token) => {
@@ -67,7 +63,7 @@ export const deleteProduct = (productId, userId, token) => {
     .then(response => {
       return response.json();
     })
-    .catch(err => context.log(err));
+    .catch();
 };
 
 export const getProduct = productId => {
@@ -77,7 +73,7 @@ export const getProduct = productId => {
     .then(response => {
       return response.json();
     })
-    .catch(err => context.log(err));
+    .catch();
 };
 
 export const updateProduct = (productId, userId, token, product) => {
@@ -92,5 +88,5 @@ export const updateProduct = (productId, userId, token, product) => {
     .then(response => {
       return response.json();
     })
-    .catch(err => concontextsole.log(err));
+    .catch();
 };

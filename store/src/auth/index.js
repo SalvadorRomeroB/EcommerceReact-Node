@@ -11,9 +11,7 @@ export const signUp = user => {
     .then(response => {
       return response.json();
     })
-    .catch(err => {
-      context.log(err);
-    });
+    .catch();
 };
 
 export const signIn = user => {
@@ -28,9 +26,7 @@ export const signIn = user => {
     .then(response => {
       return response.json();
     })
-    .catch(err => {
-      context.log(err);
-    });
+    .catch();
 };
 
 export const authenticate = (data, next) => {
@@ -49,7 +45,7 @@ export const signout = next => {
       method: "GET"
     })
       .then(response => {})
-      .catch(err => conscontextole.log(err));
+      .catch();
   }
 };
 

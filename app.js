@@ -26,7 +26,7 @@ mongoose
     useCreateIndex: true,
     useUnifiedTopology: true
   })
-  .then(() => context.log("Database Connected"));
+  .then();
 
 // middlewares
 app.use(morgan("dev"));
@@ -42,7 +42,7 @@ app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 
 app.post("/checkout", async (req, res) => {
-  context.log("Request:", req.body);
+  console.log("Request:", req.body);
 
   let error;
   let status;
@@ -76,10 +76,10 @@ app.post("/checkout", async (req, res) => {
         idempotency_key
       }
     );
-    context.log("Charge:", { charge });
+    console.log("Charge:", { charge });
     status = "success";
   } catch (error) {
-    context.error("Error:", error);
+    console.error("Error:", error);
     status = "failure";
   }
 
@@ -95,5 +95,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  context.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
