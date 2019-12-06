@@ -32,7 +32,7 @@ function Home() {
     getProducts("createdAt").then(data => {
       if (data.error) {
         setError(data.error);
-        console.log(error);
+        context.log(error);
       } else {
         setProductsByArrival(data);
       }

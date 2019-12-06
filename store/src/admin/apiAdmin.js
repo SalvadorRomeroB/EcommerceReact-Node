@@ -12,7 +12,7 @@ export const createCategory = (userId, token, category) => {
       return response.json();
     })
     .catch(err => {
-      console.log(err);
+      context.log(err);
     });
 };
 
@@ -29,7 +29,7 @@ export const createProduct = (userId, token, product) => {
       return response.json();
     })
     .catch(err => {
-      console.log(err);
+      context.log(err);
     });
 };
 
@@ -40,7 +40,7 @@ export const getCategories = () => {
     .then(response => {
       return response.json();
     })
-    .catch(err => console.log(err));
+    .catch(err => context.log(err));
 };
 
 // PRODUCTS ADMIN
@@ -52,7 +52,7 @@ export const getProducts = () => {
     .then(response => {
       return response.json();
     })
-    .catch(err => console.log(err));
+    .catch(err => context.log(err));
 };
 
 export const deleteProduct = (productId, userId, token) => {
@@ -67,7 +67,7 @@ export const deleteProduct = (productId, userId, token) => {
     .then(response => {
       return response.json();
     })
-    .catch(err => console.log(err));
+    .catch(err => context.log(err));
 };
 
 export const getProduct = productId => {
@@ -77,7 +77,7 @@ export const getProduct = productId => {
     .then(response => {
       return response.json();
     })
-    .catch(err => console.log(err));
+    .catch(err => context.log(err));
 };
 
 export const updateProduct = (productId, userId, token, product) => {
@@ -92,5 +92,5 @@ export const updateProduct = (productId, userId, token, product) => {
     .then(response => {
       return response.json();
     })
-    .catch(err => console.log(err));
+    .catch(err => concontextsole.log(err));
 };

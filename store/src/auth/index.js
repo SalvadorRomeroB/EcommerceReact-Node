@@ -12,7 +12,7 @@ export const signUp = user => {
       return response.json();
     })
     .catch(err => {
-      console.log(err);
+      context.log(err);
     });
 };
 
@@ -29,7 +29,7 @@ export const signIn = user => {
       return response.json();
     })
     .catch(err => {
-      console.log(err);
+      context.log(err);
     });
 };
 
@@ -49,7 +49,7 @@ export const signout = next => {
       method: "GET"
     })
       .then(response => {})
-      .catch(err => console.log(err));
+      .catch(err => conscontextole.log(err));
   }
 };
 
