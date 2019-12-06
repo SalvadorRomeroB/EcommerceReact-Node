@@ -112,8 +112,8 @@ const UpdateProduct = ({ match }) => {
       <Row className={styles.box}>
         {showSuccess()}
         {showError()}
-        <Col lg={2} xs={0} />
-        <Col xs={24} lg={24}>
+        <Col lg={2} />
+        <Col xs={20} lg={24}>
           <Form onSubmit={clickSubmit}>
             {/* Change Name */}
             <label className={styles.labelStyle}>Name:</label>
@@ -189,7 +189,7 @@ const UpdateProduct = ({ match }) => {
             </Row>
             <Row>
               <Row>
-                <Col lg={12} xs={24}>
+                <Col span={12}>
                   <Form.Item>
                     {/* Change Category */}
                     <select
@@ -206,7 +206,7 @@ const UpdateProduct = ({ match }) => {
                     </select>
                   </Form.Item>
                 </Col>
-                <Col lg={12} xs={24}>
+                <Col span={12}>
                   <Form.Item>
                     <select
                       onChange={handleChange("shipping")}
@@ -220,20 +220,26 @@ const UpdateProduct = ({ match }) => {
                 </Col>
               </Row>
             </Row>
+            {/* Change shipping */}
 
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                size="large"
-              >
-                Update Product
-              </Button>
+              <Row>
+                <Col span={24}>
+                  <Button
+                    className={styles.btnStyle}
+                    type="primary"
+                    htmlType="submit"
+                    shape="round"
+                    size="large"
+                  >
+                    Create Product
+                  </Button>
+                </Col>
+              </Row>
             </Form.Item>
           </Form>
         </Col>
-        <Col lg={2} xs={0} />
+        <Col lg={2} />
       </Row>
     </div>
   );

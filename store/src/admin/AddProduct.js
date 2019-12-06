@@ -4,9 +4,8 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { createProduct, getCategories } from "./apiAdmin";
 import styles from "./styles.module.css";
-import { Form, Input, Button, Row, Col, Icon, message } from "antd";
+import { Form, Input, Button, Row, Col, message } from "antd";
 
-const { TextArea } = Input;
 const key = "updatable";
 
 const AddProduct = () => {
@@ -214,7 +213,7 @@ const AddProduct = () => {
                     shape="round"
                     size="large"
                   >
-                    Update Product
+                    Create Product
                   </Button>
                 </Col>
               </Row>
