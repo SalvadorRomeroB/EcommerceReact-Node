@@ -32,7 +32,7 @@ function NavBar(props) {
     <div>
       <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }}>
         <Menu.Item key="1">
-          <a href="/">Home</a>
+          <a href="/">FunkoStore</a>
         </Menu.Item>
         <Menu.Item key="2">
           <Dropdown overlay={subMenu()} trigger={(["click"], ["hover"])}>

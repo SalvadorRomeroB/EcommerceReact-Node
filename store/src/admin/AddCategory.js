@@ -53,7 +53,7 @@ const AddCategory = () => {
         {showSuccess()}
         {showError()}
         <Col lg={2} xs={0} />
-        <Col xs={24} lg={20}>
+        <Col xs={20} lg={24}>
           <Form className="login-form" onSubmit={clickSubmit}>
             <Form.Item>
               <input
@@ -68,6 +68,7 @@ const AddCategory = () => {
             </Form.Item>
             <Form.Item>
               <Button
+                className={styles.btnStyle}
                 type="primary"
                 htmlType="submit"
                 shape="round"
@@ -103,14 +104,6 @@ const AddCategory = () => {
       });
     }
   };
-
-  // const goBack = () => (
-  //   <Button type="primary" shape="round">
-  //     <Link to="/admin/dashboard">
-  //       <Icon type="left" />
-  //     </Link>
-  //   </Button>
-  // );
 
   return (
     <Layout
