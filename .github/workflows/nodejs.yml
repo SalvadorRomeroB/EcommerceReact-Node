@@ -20,7 +20,7 @@ jobs:
         run: npm install
       - name: npm install Front
         run: npm install --prefix store
-      - name: Run Test
+      - name: Run Front Test
         run: npm test
         env:
           CI: true
