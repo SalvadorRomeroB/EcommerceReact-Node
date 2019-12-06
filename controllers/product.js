@@ -100,21 +100,21 @@ exports.update = (req, res) => {
       });
     }
 
-    // Check info is filled
-    const { name, description, price, category, quantity, shipping } = fields;
+    // // Check info is filled
+    // const { name, description, price, category, quantity, shipping } = fields;
 
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !quantity ||
-      !shipping
-    ) {
-      return res.status(400).json({
-        error: "All fields are needed"
-      });
-    }
+    // if (
+    //   !name ||
+    //   !description ||
+    //   !price ||
+    //   !category ||
+    //   !quantity ||
+    //   !shipping
+    // ) {
+    //   return res.status(400).json({
+    //     error: "All fields are needed"
+    //   });
+    // }
 
     let product = req.product;
     product = _.extend(product, fields);

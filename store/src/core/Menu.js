@@ -32,38 +32,41 @@ function NavBar(props) {
     <div>
       <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }}>
         <Menu.Item key="1">
-          <Link to="/">Home</Link>
+          <a href="/">Home</a>
         </Menu.Item>
         <Menu.Item key="2">
           <Dropdown overlay={subMenu()} trigger={(["click"], ["hover"])}>
             <a className="ant-dropdown-link">
-              Categorias <Icon type="down" />
+              Categories <Icon type="down" />
             </a>
           </Dropdown>
         </Menu.Item>
+
+        <Menu.Item key="3">
+          <a href="/catalogo">Products</a>
+        </Menu.Item>
+
         {isAuthenticated() && isAuthenticated().user.role === 0 && (
-          <Menu.Item key="8">
-            <Link to="/catalogo">Catalogo</Link>
-          </Menu.Item>
-        )}
-        {isAuthenticated() && isAuthenticated().user.role === 0 && (
-          <Menu.Item key="3">
-            <Link to="/user/dashboard">Dashboard</Link>
+          <Menu.Item key="4">
+            {/* <Link to="/user/dashboard">Dashboard</Link> */}
+            <a href="/user/dashboard">Dashboard</a>
           </Menu.Item>
         )}
         {isAuthenticated() && isAuthenticated().user.role === 1 && (
-          <Menu.Item key="3">
-            <Link to="/admin/dashboard">Dashboard</Link>
+          <Menu.Item key="4">
+            {/* <Link to="/admin/dashboard">Dashboard</Link> */}
+            <a href="/admin/dashboard">Dashboard</a>
           </Menu.Item>
         )}
         {!isAuthenticated() && (
           <Menu.Item key="4">
-            <Link to="/signin">Signin</Link>
+            {/* <Link to="/signin">Signin</Link> */}
+            <a href="/signin">Login</a>
           </Menu.Item>
         )}
         {!isAuthenticated() && (
           <Menu.Item key="5">
-            <Link to="/signup">Signup</Link>
+            <a href="/signup">Sign up</a>
           </Menu.Item>
         )}
         {isAuthenticated() && (

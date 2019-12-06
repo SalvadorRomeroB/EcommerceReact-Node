@@ -107,7 +107,7 @@ function Carrito() {
   }
 
   return (
-    <PageLayout title="Shopping Cart" description="This is your Shopping Cart">
+    <PageLayout title="Shopping Cart">
       {shoppingCart.length > 0 ? (
         <div>
           <div>

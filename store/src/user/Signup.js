@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signUp } from "../auth";
 import { Form, Icon, Input, Button, Row, Col } from "antd";
@@ -14,7 +14,7 @@ const Signup = () => {
     redirectToReferrer: false
   });
 
-  const { name, email, password, success, error } = values;
+  const { name, email, password, success, error, redirectToReferrer } = values;
 
   const handleChange = name => event => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -33,7 +33,8 @@ const Signup = () => {
           email: "",
           password: "",
           error: "",
-          success: true
+          success: true,
+          redirectToReferrer: true
         });
       }
     });
@@ -96,9 +97,16 @@ const Signup = () => {
     </div>
   );
 
+  const redirectUser = () => {
+    if (redirectToReferrer) {
+      return <Redirect to="/signin" />;
+    }
+  };
+
   return (
     <Layout title="Signup" description="Please sign up">
       {signUpForm()}
+      {redirectUser()}
     </Layout>
   );
 };
