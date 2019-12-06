@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { createProduct, getCategories } from "./apiAdmin";
+import { getProduct, getCategories, updateProduct } from "./apiAdmin";
 import styles from "./styles.module.css";
-import { Form, Input, Button, Row, Col, Icon, message } from "antd";
+import { Form, Button, Row, Col, Icon, message } from "antd";
 
-const { TextArea } = Input;
 const key = "updatable";
 
-const AddProduct = () => {
+const UpdateProduct = ({ match }) => {
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -40,14 +39,12 @@ const AddProduct = () => {
     success
   } = values;
 
-  // load categories and set form data
-  const init = () => {
+  const initCategories = () => {
     getCategories().then(data => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
         setValues({
-          ...values,
           categories: data,
           formData: new FormData()
         });
@@ -55,8 +52,28 @@ const AddProduct = () => {
     });
   };
 
+  const init = productId => {
+    getProduct(productId).then(data => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          ...values,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          categories: data.category._id,
+          shipping: data.shipping,
+          quantity: data.quantity,
+          FormData: new FormData()
+        });
+        initCategories();
+      }
+    });
+  };
+
   useEffect(() => {
-    init();
+    init(match.params.productId);
   }, []);
 
   const handleChange = name => event => {
@@ -69,33 +86,34 @@ const AddProduct = () => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
-    createProduct(user._id, token, formData).then(data => {
-      if (data.error) {
-        setValues({ ...values, error: data.error });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          description: "",
-          photo: "",
-          price: "",
-          quantity: "",
-          loading: false,
-          createdProduct: data.name,
-          error: "",
-          success: true
-        });
+    updateProduct(match.params.productId, user._id, token, formData).then(
+      data => {
+        if (data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          setValues({
+            ...values,
+            description: "",
+            photo: "",
+            price: "",
+            quantity: "",
+            loading: false,
+            createdProduct: data.name,
+            error: "",
+            success: true
+          });
+        }
       }
-    });
+    );
   };
 
-  const newPostForm = () => (
+  const updateForm = () => (
     <div>
       <Row className={styles.box}>
         {showSuccess()}
         {showError()}
-        <Col lg={2} />
-        <Col xs={20} lg={24}>
+        <Col lg={2} xs={0} />
+        <Col xs={24} lg={24}>
           <Form onSubmit={clickSubmit}>
             {/* Change Name */}
             <label className={styles.labelStyle}>Name:</label>
@@ -171,7 +189,7 @@ const AddProduct = () => {
             </Row>
             <Row>
               <Row>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item>
                     {/* Change Category */}
                     <select
@@ -188,7 +206,7 @@ const AddProduct = () => {
                     </select>
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col lg={12} xs={24}>
                   <Form.Item>
                     <select
                       onChange={handleChange("shipping")}
@@ -202,38 +220,35 @@ const AddProduct = () => {
                 </Col>
               </Row>
             </Row>
-            {/* Change shipping */}
 
             <Form.Item>
-              <Row>
-                <Col span={24}>
-                  <Button
-                    className={styles.btnStyle}
-                    type="primary"
-                    htmlType="submit"
-                    shape="round"
-                    size="large"
-                  >
-                    Update Product
-                  </Button>
-                </Col>
-              </Row>
+              <Button
+                type="primary"
+                htmlType="submit"
+                shape="round"
+                size="large"
+              >
+                Update Product
+              </Button>
             </Form.Item>
           </Form>
         </Col>
-        <Col lg={2} />
+        <Col lg={2} xs={0} />
       </Row>
     </div>
   );
 
   const showSuccess = () => {
     if (success) {
-      message.success({
-        content: "Product added succesfully",
-        key,
-        duration: 2
-      });
-      return <Redirect to="/admin/dashboard" />;
+      if (!error) {
+        const successMessage = `Product has been updated succesfully`;
+        message.success({
+          content: successMessage,
+          key,
+          duration: 2
+        });
+        return <Redirect to="/admin/products" />;
+      }
     }
   };
 
@@ -247,14 +262,7 @@ const AddProduct = () => {
     }
   };
 
-  return (
-    <Layout
-      title="Create product"
-      description={`Hello ${user.name}, enter new product`}
-    >
-      {newPostForm()}
-    </Layout>
-  );
+  return <Layout title="Update product">{updateForm()}</Layout>;
 };
 
-export default AddProduct;
+export default UpdateProduct;

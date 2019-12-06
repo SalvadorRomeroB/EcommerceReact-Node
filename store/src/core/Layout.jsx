@@ -5,42 +5,39 @@ import { useSelector } from "react-redux";
 import styles from "./styles.module.css";
 
 const { Header, Content, Footer } = Layout;
-const PageLayout = ({
-  title = "Title",
-  description = "Description",
-  children
-}) => {
+const PageLayout = ({ title = "Title", description = "", children }) => {
   const categoryList = useSelector(state => state.categoryReducer);
 
   return (
     <Layout className="layout">
       <Header>
         <div className="logo" />
+
         <Menu categories={categoryList} />
       </Header>
 
-      <Content className={styles.content}>
+      <Content>
         <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
           <Row style={{ textAlign: "center" }}>
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-            <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-              <h1> {title} </h1>
+            <Col span={24}>
+              <h1 className={`${styles.titleFont} ${styles.centered}`}>
+                {title}
+              </h1>
             </Col>
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
           </Row>
           <Row style={{ textAlign: "center" }}>
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-            <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+            <Col span={24}>
               <h3> {description} </h3>
             </Col>
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
           </Row>
-          <Row>
-            <div className={styles.centered}>{children}</div>
+          <Row style={{ textAlign: "center" }}>
+            <Col span={24}>
+              <div className={styles.centered}>{children}</div>
+            </Col>
           </Row>
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
+      <Footer className={styles.centered}>
         Tlaloc ©2019 Created by Salva and Jaquez
       </Footer>
     </Layout>

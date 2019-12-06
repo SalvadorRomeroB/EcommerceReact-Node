@@ -42,3 +42,55 @@ export const getCategories = () => {
     })
     .catch(err => console.log(err));
 };
+
+// PRODUCTS ADMIN
+
+export const getProducts = () => {
+  return fetch(`/api/products?limit=undefined`, {
+    method: "GET"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
+
+export const deleteProduct = (productId, userId, token) => {
+  return fetch(`/api/product/${productId}/${userId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
+
+export const getProduct = productId => {
+  return fetch(`/api/product/${productId}`, {
+    method: "GET"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
+
+export const updateProduct = (productId, userId, token, product) => {
+  return fetch(`/api/product/${productId}/${userId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: product
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
+import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { createCategory } from "./apiAdmin";
-import { Form, Input, Button, Row, Col, Alert } from "antd";
+import styles from "./styles.module.css";
+import { Form, Button, Row, Col, message } from "antd";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { listCategories } from "../storeRedux/actions/index";
+
+const key = "updatable";
 
 const AddCategory = () => {
   const dispatch = useDispatch();
@@ -40,22 +44,20 @@ const AddCategory = () => {
         dispatch(listCategories(await fetchData("/api/categories")));
       }
     });
+    setName("");
   };
 
   const newCategoryFrom = () => (
     <div>
-      <Row>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }} />
-      </Row>
-      <Row>
-        <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+      <Row className={styles.box}>
         {showSuccess()}
         {showError()}
-        <Col xs={{ span: 18, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+        <Col lg={2} xs={0} />
+        <Col xs={24} lg={20}>
           <Form className="login-form" onSubmit={clickSubmit}>
             <Form.Item>
-              <Input
+              <input
+                className={styles.inpFormat}
                 type="text"
                 placeholder="category name"
                 onChange={handleChange}
@@ -65,29 +67,43 @@ const AddCategory = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                shape="round"
+                size="large"
+              >
                 Create Category
               </Button>
             </Form.Item>
           </Form>
         </Col>
-        <Col xs={{ span: 1, offset: 1 }} lg={{ span: 6, offset: 2 }} />
+        <Col lg={2} xs={0} />
       </Row>
     </div>
   );
 
   const showSuccess = () => {
     if (success) {
-      const successMessage = <h3>{name} has been created</h3>;
-      return <Alert message={successMessage} type="success" />;
+      message.success({
+        content: "Category added succesfully",
+        key,
+        duration: 2
+      });
+      return <Redirect to="/admin/dashboard" />;
     }
   };
+
   const showError = () => {
     if (error) {
-      const errorMessage = `Category should be unique`;
-      return <Alert message={errorMessage} type="error" />;
+      message.error({
+        content: "Error, category already exists",
+        key,
+        duration: 2
+      });
     }
   };
+
   // const goBack = () => (
   //   <Button type="primary" shape="round">
   //     <Link to="/admin/dashboard">
@@ -99,7 +115,7 @@ const AddCategory = () => {
   return (
     <Layout
       title="Create Category"
-      description={`Welcome back ${user.name}, please create new category`}
+      description={`Welcome back ${user.name}, please enter category name to add`}
     >
       {newCategoryFrom()}
     </Layout>

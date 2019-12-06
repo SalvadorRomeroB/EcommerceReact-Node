@@ -8,12 +8,14 @@ import PrivateRoute from "./auth/privateRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
+import ManageProducts from "./admin/ManageProducts";
+import UpdateProduct from "./admin/UpdateProduct";
 import addCategory from "./admin/AddCategory";
 import addProduct from "./admin/AddProduct";
 import Carrito from "./core/Carrito";
 import Categoria from "./core/Categoria";
 import { useDispatch } from "react-redux";
-import { listProducts, listCategories } from "../src/storeRedux/actions/index";
+import { listProducts, listCategories } from "./storeRedux/actions/index";
 import axios from "axios";
 import "./App.css";
 
@@ -52,6 +54,12 @@ function Routes() {
         <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
         <AdminRoute path="/create/category" exact component={addCategory} />
         <AdminRoute path="/create/product" exact component={addProduct} />
+        <AdminRoute path="/admin/products" exact component={ManageProducts} />
+        <AdminRoute
+          path="/admin/product/update/:productId"
+          exact
+          component={UpdateProduct}
+        />
       </Switch>
     </BrowserRouter>
   );

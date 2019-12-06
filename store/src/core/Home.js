@@ -32,6 +32,7 @@ function Home() {
     getProducts("createdAt").then(data => {
       if (data.error) {
         setError(data.error);
+        console.log(error);
       } else {
         setProductsByArrival(data);
       }
@@ -44,8 +45,7 @@ function Home() {
   }, []);
 
   return (
-    <PageLayout title="Home Page" description="">
-      <h1>Nuevos Productos:</h1>
+    <PageLayout title="Nuevos Productos">
       <Carousel autoplay>{newList(productsByArrival)}</Carousel>
       <br />
       <hr />
