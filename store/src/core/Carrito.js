@@ -112,8 +112,8 @@ function Carrito() {
         <div>
           <div>
             <Row>
-              <Col span={8}>Producto</Col>
-              <Col span={8}>Cantidad</Col>
+              <Col span={8}>Product</Col>
+              <Col span={8}>Quantity</Col>
             </Row>
           </div>
           <div>

@@ -4,7 +4,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { createProduct, getCategories } from "./apiAdmin";
 import styles from "./styles.module.css";
-import { Form, Input, Button, Row, Col, message } from "antd";
+import { Form, Button, Row, Col, message } from "antd";
 
 const key = "updatable";
 
@@ -23,8 +23,7 @@ const AddProduct = () => {
     createdProduct: "",
     redirectToProfile: false,
     formData: "",
-    success: false,
-    error: ""
+    success: false
   });
 
   const { user, token } = isAuthenticated();
@@ -239,7 +238,7 @@ const AddProduct = () => {
   const showError = () => {
     if (error) {
       message.error({
-        content: "Could not add category",
+        content: String(error),
         key,
         duration: 2
       });

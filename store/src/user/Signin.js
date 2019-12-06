@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import Layout from "../core/Layout";
 import { signIn, authenticate } from "../auth";
-import { Form, Icon, Input, Button, Row, Col, message } from "antd";
+import { Form, Icon, Input, Button, Row, Col } from "antd";
 import { isAuthenticated } from "../auth";
-
-const key = "updatable";
 
 const Signin = () => {
   const [values, setValues] = useState({

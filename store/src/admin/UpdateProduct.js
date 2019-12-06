@@ -4,7 +4,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { getProduct, getCategories, updateProduct } from "./apiAdmin";
 import styles from "./styles.module.css";
-import { Form, Button, Row, Col, Icon, message } from "antd";
+import { Form, Button, Row, Col, message } from "antd";
 
 const key = "updatable";
 
@@ -23,8 +23,7 @@ const UpdateProduct = ({ match }) => {
     createdProduct: "",
     redirectToProfile: false,
     formData: "",
-    success: false,
-    error: ""
+    success: false
   });
 
   const { user, token } = isAuthenticated();
@@ -232,7 +231,7 @@ const UpdateProduct = ({ match }) => {
                     shape="round"
                     size="large"
                   >
-                    Create Product
+                    Update Product
                   </Button>
                 </Col>
               </Row>

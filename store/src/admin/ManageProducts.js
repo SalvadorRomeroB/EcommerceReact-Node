@@ -4,7 +4,7 @@ import { getProducts, deleteProduct } from "./apiAdmin";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import styles from "./styles.module.css";
-import { Button, Row, Col, message, List, Card } from "antd";
+import { Button, Row, Col, Card } from "antd";
 
 const ManageProducts = () => {
   const [products, setProducts] = useState([]);

@@ -44,12 +44,13 @@ function Home() {
   }, []);
 
   return (
-    <PageLayout title="Nuevos Productos">
+    <PageLayout title="Funko Store">
+      <h1>New Products:</h1>
       <Carousel autoplay>{newList(productsByArrival)}</Carousel>
       <br />
       <hr />
       <br />
-      <h1>Productos mas vendidos:</h1>
+      <h1>Best sellers:</h1>
       <Carousel autoplay>{newList(productsBySell)}</Carousel>
     </PageLayout>
   );
