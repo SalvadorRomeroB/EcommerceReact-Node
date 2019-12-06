@@ -19,7 +19,7 @@ function setup() {
 }
 
 describe("Test Components", () => {
-  it("should render self and subcomponents", () => {
+  test("should render self and subcomponents", () => {
     const { enzymeWrapper } = setup();
 
     console.log(enzymeWrapper.html());
