@@ -44,7 +44,7 @@ function Home() {
   }, []);
 
   return (
-    <PageLayout title="Home Page" description="This is home page">
+    <PageLayout title="Home Page" description="">
       <h1>Nuevos Productos:</h1>
       <Carousel autoplay>{newList(productsByArrival)}</Carousel>
       <br />
